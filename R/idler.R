@@ -4,9 +4,7 @@
 #'
 #' @export
 use_idler <- function() {
-  shiny::tags$head(
-    htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
-  )
+  htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
 }
 
 #' Set up observer for client-side idle timeout message
