@@ -1,0 +1,45 @@
+#' Set up a Shiny app to use idler
+#'
+#' @description This function must be called from a Shiny app's UI
+#'
+#' @export
+use_idler <- function() {
+  shiny::tags$head(
+    htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
+  )
+}
+
+#' Set up observer for client-side idle timeout message
+#'
+#' @param session Session to observe (the default should almost always be used).
+idle_timeout <- function(session = shiny::getDefaultReactiveDomain()) {
+  shiny::observeEvent(session$input$`idler-timeout`, {
+    message("Session (", session$token, ") timed out at: ", Sys.time())
+    shinyWidgets::sendSweetAlert(
+      session,
+      title = "Session Timeout",
+      text = htmltools::HTML(sprintf(
+        "<p>Session timeout due to %.2fs inactivity<br>%s</p>",
+        session$input$`idler-timeout` / 1000,
+        Sys.time()
+      )),
+      type = "error",
+      btn_labels = NA,
+      closeOnClickOutside = FALSE,
+      html = TRUE
+    )
+    session$close()
+  })
+}
+
+#' Set the idle timer duration in seconds
+#'
+#' @param duration number of seconds of inactivity before the session is ended
+#'
+#' @export
+set <- function(duration) {
+  session <- shiny::getDefaultReactiveDomain()
+  idle_timeout(session)
+  session$sendCustomMessage("setTimeout", duration * 1000)
+  invisible(session$isClosed())
+}
