@@ -1,5 +1,5 @@
 Package: idler
-Title: Close Idle Users' RShiny Sessions
+Title: Close Idle Users' R Shiny Sessions
 Version: 0.1.0
 Authors@R: 
     person(given = "Gethin",
@@ -7,10 +7,10 @@ Authors@R:
            role = c("aut", "cre"),
            email = "grd.davies@gmail.com",
            )
-Description: idler provides an easy utility for monitoring user activity in RShiny apps and closing their sessions if left inactive for a given period of time.
+Description: Provides an easy utility for monitoring user activity in R Shiny apps 
+    and closing their sessions if left inactive for a given period of time.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
