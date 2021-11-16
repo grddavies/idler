@@ -6,6 +6,12 @@
 \usage{
 use_idler()
 }
+\value{
+shiny.tag containing a JS message handler to monitor client app use
+}
 \description{
 This function must be called from a Shiny app's UI
+}
+\examples{
+htmltools::tags$head(use_idler())
 }
