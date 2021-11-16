@@ -2,6 +2,10 @@
 #'
 #' @description This function must be called from a Shiny app's UI
 #'
+#' @return shiny.tag containing a JS message handler to monitor client app use
+#'
+#' @examples
+#' htmltools::tags$head(use_idler())
 #' @export
 use_idler <- function() {
   htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
@@ -37,7 +41,7 @@ idle_timeout <- function(session = shiny::getDefaultReactiveDomain()) {
 #' @export
 set <- function(duration) {
   session <- shiny::getDefaultReactiveDomain()
-  idle_timeout(session)
+  observer <- idle_timeout(session)
   session$sendCustomMessage("setTimeout", duration * 1000)
-  invisible(session$isClosed())
+  invisible(observer)
 }
