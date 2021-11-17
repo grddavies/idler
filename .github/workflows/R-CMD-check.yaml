@@ -55,7 +55,7 @@ jobs:
           sudo -s eval "$sysreqs"
       - name: Install dependencies
         run: |
-          Rscript -e "if (!require(remotes)) install.packages('remotes')"
+          if (!require(remotes)) install.packages('remotes')
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
