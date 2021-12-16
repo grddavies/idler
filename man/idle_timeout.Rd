@@ -7,8 +7,16 @@
 idle_timeout(session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{session}{Session to observe (the default should almost always be used).}
+\item{session}{Session to observe (the default should almost always be used)}
+}
+\value{
+a Shiny observer R6 class object  (see \code{\link[shiny:observe]{shiny::observe()}})
 }
 \description{
 Set up observer for client-side idle timeout message
+}
+\examples{
+\dontrun{
+idler::idle_timeout()
+}
 }

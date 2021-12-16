@@ -9,6 +9,16 @@ set(duration)
 \arguments{
 \item{duration}{number of seconds of inactivity before the session is ended}
 }
+\value{
+invisibly returns a Shiny observer R6 class object
+(see \code{\link[shiny:observe]{shiny::observe()}})
+}
 \description{
 Set the idle timer duration in seconds
+}
+\examples{
+\dontrun{
+# We set a 10s timeout
+idler::set(10)
+}
 }
