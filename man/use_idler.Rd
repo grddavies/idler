@@ -13,5 +13,5 @@ shiny.tag containing a JS message handler to monitor client app use
 This function must be called from a Shiny app's UI
 }
 \examples{
-htmltools::tags$head(use_idler())
+shiny::tags$head(use_idler())
 }
