@@ -1,6 +1,6 @@
 Package: idler
 Title: Close Idle Users' R Shiny Sessions
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     person(given = "Gethin",
            family = "Davies",
@@ -19,6 +19,7 @@ Imports:
     shiny,
     shinyWidgets
 Suggests: 
+    packer,
     globals,
     shinytest,
     testthat (>= 3.0.0)

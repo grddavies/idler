@@ -5,16 +5,22 @@
 #' @return shiny.tag containing a JS message handler to monitor client app use
 #'
 #' @examples
-#' htmltools::tags$head(use_idler())
+#' shiny::tags$head(use_idler())
 #' @export
 use_idler <- function() {
-  htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
+  shiny::singleton(
+    shiny::tags$head(
+      shiny::tags$script(src = "idler-assets/idler.js")
+    )
+  )
 }
 
 #' Set up observer for client-side idle timeout message
 #'
 #' @param session Session to observe (the default should almost always be used)
+#'
 #' @return a Shiny observer R6 class object  (see [shiny::observe()])
+#'
 #' @examples
 #' \dontrun{
 #' idler::idle_timeout()
