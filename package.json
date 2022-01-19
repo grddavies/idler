@@ -1,0 +1,32 @@
+{
+  "name": "idler",
+  "version": "0.2.0",
+  "description": "Boot idle users off your Shiny server",
+  "main": "index.js",
+  "directories": {
+    "man": "man",
+    "test": "tests"
+  },
+  "scripts": {
+    "none": "webpack --config webpack.dev.js --mode=none",
+    "development": "webpack --config webpack.dev.js",
+    "production": "webpack --config webpack.prod.js",
+    "watch": "webpack --config webpack.dev.js -d --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grddavies/idler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grddavies/idler/issues"
+  },
+  "homepage": "https://github.com/grddavies/idler#readme",
+  "devDependencies": {
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-merge": "^5.8.0"
+  }
+}

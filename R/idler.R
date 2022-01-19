@@ -8,7 +8,11 @@
 #' htmltools::tags$head(use_idler())
 #' @export
 use_idler <- function() {
-  htmltools::includeScript(system.file("js", "idler.js", package = "idler"))
+  singleton(
+    tags$head(
+      tags$script(src = "idler-assets/idler.js")
+    )
+  )
 }
 
 #' Set up observer for client-side idle timeout message

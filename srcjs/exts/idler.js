@@ -1,3 +1,5 @@
+import 'shiny';
+
 Shiny.addCustomMessageHandler("setTimeout", function (timeoutDuration) {
   if (!timeoutDuration) return;
   var t = setTimeout(logout, timeoutDuration);
