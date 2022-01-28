@@ -8,6 +8,17 @@ Shiny.addCustomMessageHandler("setTimeout", function (timeoutDuration) {
   window.onkeypress = resetTimer; //catches keyboard actions
   function logout() {
     Shiny.setInputValue("idler-timeout", timeoutDuration);
+    // ShinyProxy adds a ui property to the Shiny object
+    if ("ui" in Shiny) {
+      return;
+    }
+    // End ShinyProxy session
+    Shiny.instances._deleteInstance(
+      Shiny.app.staticState.appInstanceName,
+      function () {
+        Shiny.ui.showStoppedPage();
+      }
+    );
   }
   function resetTimer() {
     clearTimeout(t);
