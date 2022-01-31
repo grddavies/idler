@@ -9,7 +9,7 @@ Shiny.addCustomMessageHandler("setTimeout", function (timeoutDuration) {
   function logout() {
     Shiny.setInputValue("idler-timeout", timeoutDuration);
     // ShinyProxy adds a ui property to the Shiny object
-    if ("ui" in Shiny) {
+    if (!("ui" in Shiny)) {
       return;
     }
     // End ShinyProxy session
