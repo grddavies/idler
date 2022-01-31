@@ -10,12 +10,14 @@ Shiny.addCustomMessageHandler("setTimeout", function (timeoutDuration) {
     Shiny.setInputValue("idler-timeout", timeoutDuration);
     // ShinyProxy adds a ui property to the Shiny object
     if (!("ui" in Shiny)) {
+      alert("ui in shiny!");
       return;
     }
     // End ShinyProxy session
     Shiny.instances._deleteInstance(
       Shiny.app.staticState.appInstanceName,
       function () {
+        alert("_deleteInstance callback");
         Shiny.ui.showStoppedPage();
       }
     );
