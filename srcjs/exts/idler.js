@@ -9,16 +9,16 @@ Shiny.addCustomMessageHandler("setTimeout", function (timeoutDuration) {
   function logout() {
     Shiny.setInputValue("idler-timeout", timeoutDuration);
     // ShinyProxy adds a ui property to the Shiny object
-    if (!("ui" in Shiny)) {
-      alert("ui in shiny!");
+    if ((window.parent != window.top) && !("ui" in window.parent.Shiny)) {
       return;
     }
+    alert(window.parent.Shiny.toString());
+    let ShinyProxy = window.parent.Shiny;
     // End ShinyProxy session
-    Shiny.instances._deleteInstance(
-      Shiny.app.staticState.appInstanceName,
+    ShinyProxy.instances._deleteInstance(
+      ShinyProxy.app.staticState.appInstanceName,
       function () {
-        alert("_deleteInstance callback");
-        Shiny.ui.showStoppedPage();
+        ShinyProxy.ui.showStoppedPage();
       }
     );
   }
