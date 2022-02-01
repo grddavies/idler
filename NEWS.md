@@ -1,3 +1,7 @@
+# idler (development version)
+
+* Use an error constructor 
+
 # idler 0.2.0
 
 * Transpiled and minified the JS handler using `packer`
