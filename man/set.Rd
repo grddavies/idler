@@ -4,14 +4,19 @@
 \alias{set}
 \title{Set the idle timer duration in seconds}
 \usage{
-set(duration)
+set(duration, warn_after = NULL)
 }
 \arguments{
 \item{duration}{number of seconds of inactivity before the session is ended}
+
+\item{warn_after}{number of seconds of inactivity before the user is warned.
+A NULL or value greater than \code{duration} will give the user no warning
+before terminating the session.}
 }
 \value{
-invisibly returns a Shiny observer R6 class object
-(see \code{\link[shiny:observe]{shiny::observe()}})
+invisibly returns a list of Shiny observer R6 class objects. The
+first element observes timeout messages, the second observes warning inputs
+from client side idler code. (see \code{\link[shiny:observe]{shiny::observe()}})
 }
 \description{
 Set the idle timer duration in seconds

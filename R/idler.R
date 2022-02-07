@@ -46,23 +46,54 @@ idle_timeout <- function(session = shiny::getDefaultReactiveDomain()) {
   })
 }
 
+#' Set up observer to warn client their session will be closed
+#'
+#' @inheritParams idle_timeout
+idle_warning <- function(session = shiny::getDefaultReactiveDomain()) {
+  shiny::observeEvent(session$input$`idler-warning`, {
+    message("Session (", session$token, ") warned at: ", Sys.time())
+    shinyWidgets::sendSweetAlert(
+      session,
+      title = "Session Timeout Warning",
+      text = htmltools::HTML(sprintf(
+        "<p>Your session will time out due to inactivity in %ss<br>%s</p>",
+        session$input$`idler-warning` / 1000,
+        Sys.time()
+      )),
+      type = "warning",
+      btn_labels = NA,
+      closeOnClickOutside = FALSE,
+      html = TRUE
+    )
+  })
+}
+
 #' Set the idle timer duration in seconds
 #'
 #' @param duration number of seconds of inactivity before the session is ended
-#' @return invisibly returns a Shiny observer R6 class object
-#'  (see [shiny::observe()])
+#' @param warn_after number of seconds of inactivity before the user is warned.
+#'   A NULL or value greater than `duration` will give the user no warning
+#'   before terminating the session.
+#' @return invisibly returns a list of Shiny observer R6 class objects. The
+#'  first element observes timeout messages, the second observes warning inputs
+#'  from client side idler code. (see [shiny::observe()])
 #' @examples
 #' \dontrun{
 #' # We set a 10s timeout
 #' idler::set(10)
 #' }
 #' @export
-set <- function(duration) {
+set <- function(duration, warn_after = NULL) {
   session <- shiny::getDefaultReactiveDomain()
   if (is.null(session)) stop_not_in_session()
-  observer <- idle_timeout(session)
-  session$sendCustomMessage("setTimeout", duration * 1000)
-  invisible(observer)
+  timeoutObs <- idle_timeout(session)
+  warningObs <- idle_warning(session)
+  msg <- list(timeout = duration, warning = warn_after)
+  session$sendCustomMessage(
+    "setTimeout",
+    Map(function(x) x * 1000, msg)
+  )
+  invisible(list(timeoutObs, warningObs))
 }
 
 #' Error constructor
