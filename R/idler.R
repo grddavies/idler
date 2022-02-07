@@ -26,10 +26,7 @@ use_idler <- function() {
 #' idler::idle_timeout()
 #' }
 idle_timeout <- function(session = shiny::getDefaultReactiveDomain()) {
-  assertthat::assert_that(
-    !is.null(session),
-    msg = "`idler::idle_timeout()` called outside of a Shiny reactive domain"
-  )
+  if (is.null(session)) stop_not_in_session()
   shiny::observeEvent(session$input$`idler-timeout`, {
     message("Session (", session$token, ") timed out at: ", Sys.time())
     shinyWidgets::sendSweetAlert(
@@ -62,11 +59,25 @@ idle_timeout <- function(session = shiny::getDefaultReactiveDomain()) {
 #' @export
 set <- function(duration) {
   session <- shiny::getDefaultReactiveDomain()
-  assertthat::assert_that(
-    !is.null(session),
-    msg = "`idler::set()` called outside of a Shiny reactive domain"
-  )
+  if (is.null(session)) stop_not_in_session()
   observer <- idle_timeout(session)
   session$sendCustomMessage("setTimeout", duration * 1000)
   invisible(observer)
+}
+
+#' Error constructor
+#' @noRd
+#' @keywords internal
+stop_not_in_session <- function() {
+  rlang::abort(
+    caller = deparse(sys.call(-1)),
+    class = "idler_error_not_in_session"
+  )
+}
+
+#' Format error messages
+#' @export
+#' @noRd
+conditionMessage.idler_error_not_in_session <- function(c) {
+  glue::glue_data(c, "`{caller}` called outside of a Shiny reactive domain")
 }
