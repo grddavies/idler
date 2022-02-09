@@ -62,7 +62,8 @@ idle_warning <- function(session = shiny::getDefaultReactiveDomain()) {
       )),
       type = "warning",
       btn_labels = NA,
-      closeOnClickOutside = FALSE,
+      showCloseButton = TRUE,
+      closeOnClickOutside = TRUE,
       html = TRUE
     )
   })
