@@ -5,11 +5,9 @@ Shiny.addCustomMessageHandler("setTimeout", function (msg) {
   if (msg.warning && msg.warning < msg.timeout) {
     w = setTimeout(idlerWarning, msg.warning);
     var idlerWarning = () => {
-      Shiny.setInputValue(
-        "idler-warning",
-        msg.timeout - msg.warning,
-        (priority = "event")
-      );
+      Shiny.setInputValue("idler-warning", msg.timeout - msg.warning, {
+        priority: "event",
+      });
     };
     resetTimer = () => {
       clearTimeout(t);
