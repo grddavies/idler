@@ -36,3 +36,7 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+## Acknowledgements
+
+The JavaScript event listeners at `idler`'s core are lifted straight from [this stack exchange answer](https://stackoverflow.com/a/58006254/12879453). Credit for that (crucial) bit of functionality goes to [Pork Chop](https://stackoverflow.com/users/2753526/pork-chop)
